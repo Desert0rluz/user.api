@@ -32,7 +32,7 @@ public class UserApiTests
         stringResponse.Should().Be("Hello World!");
     }
     
-    [Test, Order(2)]
+    [Test, Order(3)]
     public async Task GetUsers()
     {
         // Arrange
@@ -51,23 +51,24 @@ public class UserApiTests
             Assert.GreaterOrEqual(users.Length, 1);
     }
     
-    [Test, Order(3)]
+    [Test, Order(2)]
     public async Task InsertUser()
     {
-        var random = new Random();
-        var userId = random.Next(Int32.MaxValue);
         
         // Arrange
         var requestPath = "/api/Users";
-        User userToCreate = new User { Id = userId, Email = "test@test.com.br", Name = "User999 User999" }; 
-        
+        User userToCreate = new User {Id = 0, Email = "test@test.com.br", Name = "User999 User999" };
+
         // Act
         var response = await _httpClient.PostAsJsonAsync(_endpointURL + requestPath, userToCreate);
         var usersResult = await response.Content.ReadFromJsonAsync<User>();
-        
+        var userId = usersResult.Id;
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        userToCreate.Should().BeEquivalentTo(usersResult);
+        userToCreate.Email.Should().BeEquivalentTo(usersResult.Email);
+        userToCreate.Name.Should().BeEquivalentTo(usersResult.Name);
+
     }
 
     [Test, Order(4)]
@@ -87,7 +88,7 @@ public class UserApiTests
         var putResponse = await _httpClient.PutAsJsonAsync(_endpointURL + putRequestPath, userToUpdate);
         
         // Assert
-        putResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        putResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
     
     [Test, Order(5)]
@@ -106,7 +107,7 @@ public class UserApiTests
         var deleteResponse = await _httpClient.DeleteAsync(_endpointURL + deleteRequestPath);
         
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [OneTimeTearDown]

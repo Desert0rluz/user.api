@@ -1,15 +1,11 @@
-# users.api
-Code Assessment para os candidatos a vagas de Analista de Sistemas,
-Este projeto servirá como uma etapa de seleção e visa conhecer melhor os candidatos.
-Obs: este teste não tem caráter eliminatório.
+A API Users.Api foi criada para gerenciar informações de usuários. Ela fornece endpoints para realizar operações básicas de CRUD (Create, Read, Update, Delete) sobre os dados dos usuários armazenados em um banco de dados MS SQL Server.
+Como a API Funciona
 
-Os candidatos devem seguir os seguintes passos para concluir esta etapa:
+A API utiliza o Entity Framework para interagir com o banco de dados e expõe os seguintes endpoints conforme a especificação do Swagger:
 
-* Clonar este repositório
-* Utilizar o projeto Users.Api para desenvolver a API
-* A API deve respeitar a especificação contida no arquivo swagger.json
-* A API deve passar nos testes contidos no projeto Users.Tests
-* Os dados da API devem ser armazenados em um banco de dados, podendo optar por MS Sql Server, PostgreSQL ou SQLite
-* O projeto deve utilizar Entity Framework
-* Devem enviar ao RH o link para um novo o repositório no github contendo a solução
-
+    GET /api/Users: Retorna a lista de todos os usuários.
+    GET /api/Users/{id}: Retorna os detalhes de um usuário específico pelo ID.
+    POST /api/Users: Cria um novo usuário.
+    PUT /api/Users/{id}: Atualiza as informações de um usuário existente pelo ID.
+    DELETE /api/Users/{id}: Deleta um usuário específico pelo ID.
+    GET /api/Users/hello: Retorna a string "Hello World!" para verificar se a API está funcionando.
